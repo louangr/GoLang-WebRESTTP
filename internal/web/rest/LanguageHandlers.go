@@ -13,6 +13,13 @@ import (
 
 var languageDAOMemory = persistence.NewLanguageDAOMemory()
 
+// @Summary Get all languages
+// @Description Get all languages
+// @Tags Languages
+// @Success 200 {array} entities.Language
+// @Failure 404 {object} object
+// @Router /languages [get]
+
 func GetLanguages(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("GetLanguages")
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
@@ -27,6 +34,14 @@ func GetLanguages(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, "%s", j)
 }
+
+// @Summary Get one language
+// @Description Get language by Id
+// @Tags Languages
+// @Param id path number true "Language Id"
+// @Success 200 {object} entities.Language
+// @Failure 404,500 {object} object
+// @Router /languages/{id} [get]
 
 func GetLanguageById(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
@@ -50,6 +65,14 @@ func GetLanguageById(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "%s", j)
 }
 
+// @Summary Create new language based on request body
+// @Description Create new language
+// @Tags Languages
+// @Accept json
+// @Success 200 {object} object
+// @Failure 400 {object} object
+// @Router /languages [post]
+
 func PostLanguage(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("PostLanguage")
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
@@ -71,6 +94,14 @@ func PostLanguage(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// @Summary Update language based on request body
+// @Description Update language
+// @Tags Languages
+// @Accept json
+// @Success 200 {object} object
+// @Failure 400 {object} object
+// @Router /languages [put]
+
 func PutLanguage(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("PutLanguage")
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
@@ -91,6 +122,14 @@ func PutLanguage(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, resources.UnsuccessfulUpdateJson)
 	}
 }
+
+// @Summary Delete one language
+// @Description Delete language by Id
+// @Tags Languages
+// @Param id path number true "Language Id"
+// @Success 200 {object} object
+// @Failure 404,500 {object} object
+// @Router /languages/{id} [delete]
 
 func DeleteLanguageById(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
