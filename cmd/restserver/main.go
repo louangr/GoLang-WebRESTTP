@@ -5,11 +5,13 @@ import (
 	"internal/web/rest"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
 )
 
 func main() {
+	portNumber := os.Args[1]
 	myRouter := mux.NewRouter().StrictSlash(true)
 
 	myRouter.HandleFunc("/students", rest.GetStudents).Methods("GET")
@@ -24,6 +26,6 @@ func main() {
 	myRouter.HandleFunc("/languages", rest.PutLanguage).Methods("PUT")
 	myRouter.HandleFunc("/languages/{code}", rest.DeleteLanguageById).Methods("DELETE")
 
-	fmt.Println("Server started on port 8000")
-	log.Fatal(http.ListenAndServe(":8000", myRouter))
+	fmt.Println("Server started on port", portNumber)
+	log.Fatal(http.ListenAndServe(":"+portNumber, myRouter))
 }

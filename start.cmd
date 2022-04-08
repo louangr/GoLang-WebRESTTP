@@ -1,3 +1,5 @@
+SET portNumber=8080
+
 go clean -cache ./cmd/restserver/...
 go build -o ./cmd/restserver -v ./cmd/restserver/...
-.\cmd\restserver\restserver.exe
+.\cmd\restserver\restserver.exe %portNumber%
