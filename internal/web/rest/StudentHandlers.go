@@ -12,7 +12,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-var studentDAOMemory = persistence.NewStudentDAOMemory()
+var studentDAOMemory = persistence.NewStudentDAOBolt()
 
 func GetStudents(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("GetStudents")

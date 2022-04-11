@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"internal/persistence"
 	"internal/web/rest"
 	"log"
 	"net/http"
@@ -11,6 +12,9 @@ import (
 )
 
 func main() {
+	persistence.InitBoldDB()
+	defer persistence.BoltDBInstance.DB.Close()
+
 	portNumber := os.Args[1]
 	myRouter := mux.NewRouter().StrictSlash(true)
 
@@ -27,5 +31,7 @@ func main() {
 	myRouter.HandleFunc("/languages/{code}", rest.DeleteLanguageById).Methods("DELETE")
 
 	fmt.Println("Server started on port", portNumber)
+	fmt.Println(persistence.BoltDBInstance.GetAll(persistence.StudentBucketName))
+	fmt.Println(persistence.BoltDBInstance.Get(persistence.StudentBucketName, "1"))
 	log.Fatal(http.ListenAndServe(":"+portNumber, myRouter))
 }
