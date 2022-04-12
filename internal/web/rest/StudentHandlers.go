@@ -12,12 +12,12 @@ import (
 	"github.com/gorilla/mux"
 )
 
-var studentDAOMemory = persistence.NewStudentDAOBolt()
+var studentDAO = persistence.NewStudentDAOBolt()
 
 func GetStudents(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("GetStudents")
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
-	data := studentDAOMemory.GetAll()
+	data := studentDAO.GetAll()
 
 	j, err := json.Marshal(data)
 	if err != nil {
@@ -35,7 +35,7 @@ func GetStudentById(w http.ResponseWriter, r *http.Request) {
 	intId, _ := strconv.Atoi(id)
 	fmt.Printf("GetStudentById (%s)\n", id)
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
-	data := studentDAOMemory.Get(intId)
+	data := studentDAO.Get(intId)
 
 	if data.Id == -1 {
 		fmt.Fprintf(w, resources.NotFoundResourceJson)
@@ -64,7 +64,7 @@ func PostStudent(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	hasBeenSaved := studentDAOMemory.Save(newStudent)
+	hasBeenSaved := studentDAO.Save(newStudent)
 
 	if hasBeenSaved {
 		fmt.Fprintf(w, resources.SuccessfulAdditionJson)
@@ -85,7 +85,7 @@ func PutStudent(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	hasBeenUpdated := studentDAOMemory.Update(student)
+	hasBeenUpdated := studentDAO.Update(student)
 
 	if hasBeenUpdated {
 		fmt.Fprintf(w, resources.SuccessfulUpdateJson)
@@ -101,7 +101,7 @@ func DeleteStudentById(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("DeleteLanguageById (%s)\n", id)
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 
-	hasBeenDeleted := studentDAOMemory.Delete(intId)
+	hasBeenDeleted := studentDAO.Delete(intId)
 
 	if hasBeenDeleted {
 		fmt.Fprintf(w, resources.SuccessfulDeletionJson)

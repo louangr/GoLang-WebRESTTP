@@ -8,7 +8,7 @@ import (
 var RandomStudents = []Student{
 	{Id: 1, Firstname: "Joe", Lastname: "Doe", Age: 20, LanguageCode: "fra"},
 	{Id: 2, Firstname: "Bob", Lastname: "Doe", Age: 21, LanguageCode: "fra"},
-	{Id: 3, Firstname: "Bob", Lastname: "USA", Age: 21, LanguageCode: "eng"},
+	{Id: 3, Firstname: "Jahn", Lastname: "Doe", Age: 21, LanguageCode: "eng"},
 }
 
 type Student struct {

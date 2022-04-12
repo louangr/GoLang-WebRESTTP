@@ -31,7 +31,5 @@ func main() {
 	myRouter.HandleFunc("/languages/{code}", rest.DeleteLanguageById).Methods("DELETE")
 
 	fmt.Println("Server started on port", portNumber)
-	fmt.Println(persistence.BoltDBInstance.GetAll(persistence.StudentBucketName))
-	fmt.Println(persistence.BoltDBInstance.Get(persistence.StudentBucketName, "1"))
 	log.Fatal(http.ListenAndServe(":"+portNumber, myRouter))
 }

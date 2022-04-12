@@ -6,10 +6,10 @@ import (
 )
 
 var RandomLanguages = []Language{
-	{Code: "fra", Name: "French"},
-	{Code: "eng", Name: "English"},
-	{Code: "spa", Name: "Spanish"},
-	{Code: "fin", Name: "Finnish"},
+	{Code: "go", Name: "Go"},
+	{Code: "js", Name: "JavaScript"},
+	{Code: "ts", Name: "TypeScript"},
+	{Code: "java", Name: "Java"},
 }
 
 type Language struct {

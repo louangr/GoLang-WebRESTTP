@@ -11,12 +11,12 @@ import (
 	"github.com/gorilla/mux"
 )
 
-var languageDAOMemory = persistence.NewLanguageDAOMemory()
+var languageDAO = persistence.NewLanguageDAOBolt()
 
 func GetLanguages(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("GetLanguages")
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
-	data := languageDAOMemory.GetAll()
+	data := languageDAO.GetAll()
 
 	j, err := json.Marshal(data)
 	if err != nil {
@@ -33,7 +33,7 @@ func GetLanguageById(w http.ResponseWriter, r *http.Request) {
 	code := vars["code"]
 	fmt.Printf("GetLanguageById (%s)\n", code)
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
-	data := languageDAOMemory.Get(code)
+	data := languageDAO.Get(code)
 
 	if data.Code == "nil" {
 		fmt.Fprintf(w, resources.NotFoundResourceJson)
@@ -62,7 +62,7 @@ func PostLanguage(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	hasBeenSaved := languageDAOMemory.Save(newLanguage)
+	hasBeenSaved := languageDAO.Save(newLanguage)
 
 	if hasBeenSaved {
 		fmt.Fprintf(w, resources.SuccessfulAdditionJson)
@@ -83,7 +83,7 @@ func PutLanguage(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	hasBeenUpdated := languageDAOMemory.Update(language)
+	hasBeenUpdated := languageDAO.Update(language)
 
 	if hasBeenUpdated {
 		fmt.Fprintf(w, resources.SuccessfulUpdateJson)
@@ -98,7 +98,7 @@ func DeleteLanguageById(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("DeleteLanguageById (%s)\n", code)
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 
-	hasBeenDeleted := languageDAOMemory.Delete(code)
+	hasBeenDeleted := languageDAO.Delete(code)
 
 	if hasBeenDeleted {
 		fmt.Fprintf(w, resources.SuccessfulDeletionJson)
