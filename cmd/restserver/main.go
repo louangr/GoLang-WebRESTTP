@@ -12,7 +12,8 @@ import (
 )
 
 func main() {
-	persistence.InitBoldDB()
+	dbFileName := os.Args[2]
+	persistence.InitBoldDB(dbFileName)
 	defer persistence.BoltDBInstance.DB.Close()
 
 	portNumber := os.Args[1]

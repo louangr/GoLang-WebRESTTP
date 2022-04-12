@@ -17,8 +17,8 @@ var BoltDBInstance BoltDB
 var StudentBucketName string = "Student"
 var LanguageBucketName string = "Language"
 
-func InitBoldDB() {
-	db, err := bolt.Open("my.db", 0600, nil)
+func InitBoldDB(dbFileName string) {
+	db, err := bolt.Open(dbFileName+".db", 0600, nil)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -1,5 +1,6 @@
 SET portNumber=8080
+SET dbFileName="myBolt"
 
 go clean -cache ./cmd/restserver/...
 go build -o ./cmd/restserver -v ./cmd/restserver/...
-.\cmd\restserver\restserver.exe %portNumber%
+.\cmd\restserver\restserver.exe %portNumber% %dbFileName%

@@ -3,6 +3,7 @@
 - To build the project, run `./build.cmd` and find the executable in `./cmd/restserver`
 - To start the REST API, run `./start.cmd`
   - The port number can be change in the first line of the `start.cmd` file
+  - The .db file name can be change in the second line of the `start.cmd` file
 
 ## TODO :
 - OpenAPI (au format yaml) => doc de l'API REST
