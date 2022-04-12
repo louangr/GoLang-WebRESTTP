@@ -81,7 +81,7 @@ func (b *BoltDB) Get(bucketName string, key string) string {
 		return nil
 	})
 
-	if err != nil {
+	if err != nil || result == "" {
 		return "nil"
 	}
 
@@ -110,6 +110,11 @@ func (b *BoltDB) GetAll(bucketName string) []string {
 }
 
 func (b *BoltDB) Put(bucketName string, key string, value string) bool {
+	element := b.Get(bucketName, key)
+
+	if element != "nil" {
+		return false
+	}
 
 	err := b.DB.Update(func(tx *bolt.Tx) error {
 		bucket := tx.Bucket([]byte(bucketName))
@@ -125,6 +130,11 @@ func (b *BoltDB) Put(bucketName string, key string, value string) bool {
 }
 
 func (b *BoltDB) Delete(bucketName string, key string) bool {
+	element := b.Get(bucketName, key)
+
+	if element == "nil" {
+		return false
+	}
 
 	err := b.DB.Update(func(tx *bolt.Tx) error {
 		bucket := tx.Bucket([]byte(bucketName))
