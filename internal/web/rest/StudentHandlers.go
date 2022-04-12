@@ -14,10 +14,10 @@ import (
 
 var studentDAO = persistence.NewStudentDAOBolt()
 
-func GetStudents(w http.ResponseWriter, r *http.Request) {
+func GetStudents(w http.ResponseWriter, r *http.Request, dao persistence.StudentDAO) {
 	fmt.Println("GetStudents")
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
-	data := studentDAO.GetAll()
+	data := dao.GetAll()
 
 	j, err := json.Marshal(data)
 	if err != nil {
