@@ -21,6 +21,7 @@ func GetLanguages(w http.ResponseWriter, r *http.Request) {
 	j, err := json.Marshal(data)
 	if err != nil {
 		fmt.Println(resources.MarshalingError, err)
+		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, resources.InternalErrorJson)
 		return
 	}
@@ -36,6 +37,7 @@ func GetLanguageById(w http.ResponseWriter, r *http.Request) {
 	data := languageDAO.Get(code)
 
 	if data.Code == "nil" {
+		w.WriteHeader(http.StatusNotFound)
 		fmt.Fprintf(w, resources.NotFoundResourceJson)
 		return
 	}
@@ -43,6 +45,7 @@ func GetLanguageById(w http.ResponseWriter, r *http.Request) {
 	j, err := json.Marshal(data)
 	if err != nil {
 		fmt.Println(resources.MarshalingError, err)
+		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, resources.InternalErrorJson)
 		return
 	}
@@ -58,6 +61,7 @@ func PostLanguage(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&newLanguage)
 
 	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, resources.MarshalingErrorJson)
 		return
 	}
@@ -65,8 +69,10 @@ func PostLanguage(w http.ResponseWriter, r *http.Request) {
 	hasBeenSaved := languageDAO.Save(newLanguage)
 
 	if hasBeenSaved {
+		w.WriteHeader(http.StatusCreated)
 		fmt.Fprintf(w, resources.SuccessfulAdditionJson)
 	} else {
+		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, resources.UnsuccessfulAdditionJson)
 	}
 }
@@ -79,6 +85,7 @@ func PutLanguage(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&language)
 
 	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, resources.MarshalingErrorJson)
 		return
 	}
@@ -88,6 +95,7 @@ func PutLanguage(w http.ResponseWriter, r *http.Request) {
 	if hasBeenUpdated {
 		fmt.Fprintf(w, resources.SuccessfulUpdateJson)
 	} else {
+		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, resources.UnsuccessfulUpdateJson)
 	}
 }
@@ -103,6 +111,7 @@ func DeleteLanguageById(w http.ResponseWriter, r *http.Request) {
 	if hasBeenDeleted {
 		fmt.Fprintf(w, resources.SuccessfulDeletionJson)
 	} else {
+		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, resources.UnsuccessfulDeletionJson)
 	}
 }

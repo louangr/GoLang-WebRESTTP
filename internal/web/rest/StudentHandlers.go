@@ -22,6 +22,7 @@ func GetStudents(w http.ResponseWriter, r *http.Request) {
 	j, err := json.Marshal(data)
 	if err != nil {
 		fmt.Println(resources.MarshalingError, err)
+		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, resources.InternalErrorJson)
 		return
 	}
@@ -38,6 +39,7 @@ func GetStudentById(w http.ResponseWriter, r *http.Request) {
 	data := studentDAO.Get(intId)
 
 	if data.Id == -1 {
+		w.WriteHeader(http.StatusNotFound)
 		fmt.Fprintf(w, resources.NotFoundResourceJson)
 		return
 	}
@@ -45,6 +47,7 @@ func GetStudentById(w http.ResponseWriter, r *http.Request) {
 	j, err := json.Marshal(data)
 	if err != nil {
 		fmt.Println(resources.MarshalingError, err)
+		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, resources.InternalErrorJson)
 		return
 	}
@@ -60,6 +63,7 @@ func PostStudent(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&newStudent)
 
 	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, resources.MarshalingErrorJson)
 		return
 	}
@@ -67,8 +71,10 @@ func PostStudent(w http.ResponseWriter, r *http.Request) {
 	hasBeenSaved := studentDAO.Save(newStudent)
 
 	if hasBeenSaved {
+		w.WriteHeader(http.StatusCreated)
 		fmt.Fprintf(w, resources.SuccessfulAdditionJson)
 	} else {
+		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, resources.UnsuccessfulAdditionJson)
 	}
 }
@@ -81,6 +87,7 @@ func PutStudent(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&student)
 
 	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, resources.MarshalingErrorJson)
 		return
 	}
@@ -90,6 +97,7 @@ func PutStudent(w http.ResponseWriter, r *http.Request) {
 	if hasBeenUpdated {
 		fmt.Fprintf(w, resources.SuccessfulUpdateJson)
 	} else {
+		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, resources.UnsuccessfulUpdateJson)
 	}
 }
@@ -106,6 +114,7 @@ func DeleteStudentById(w http.ResponseWriter, r *http.Request) {
 	if hasBeenDeleted {
 		fmt.Fprintf(w, resources.SuccessfulDeletionJson)
 	} else {
+		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, resources.UnsuccessfulDeletionJson)
 	}
 }
