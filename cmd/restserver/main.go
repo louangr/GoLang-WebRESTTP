@@ -19,9 +19,7 @@ func main() {
 	portNumber := os.Args[1]
 	myRouter := mux.NewRouter().StrictSlash(true)
 
-	var studentDAO = persistence.NewStudentDAOMemory()
-
-	myRouter.HandleFunc("/students", test(rest.GetStudents, studentDAO)).Methods("GET")
+	myRouter.HandleFunc("/students", rest.GetStudents).Methods("GET")
 	myRouter.HandleFunc("/students/{id:[0-9]+}", rest.GetStudentById).Methods("GET")
 	myRouter.HandleFunc("/students", rest.PostStudent).Methods("POST")
 	myRouter.HandleFunc("/students", rest.PutStudent).Methods("PUT")
@@ -35,10 +33,4 @@ func main() {
 
 	fmt.Println("Server started on port", portNumber)
 	log.Fatal(http.ListenAndServe(":"+portNumber, myRouter))
-}
-
-func test(handler func(w http.ResponseWriter, r *http.Request, dao persistence.StudentDAO), dao persistence.StudentDAO) func(w http.ResponseWriter, r *http.Request) {
-	return func(w http.ResponseWriter, r *http.Request) {
-		handler(w, r, dao)
-	}
 }

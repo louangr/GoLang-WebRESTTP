@@ -11,9 +11,8 @@ import (
 	"github.com/gorilla/mux"
 )
 
-var languageDAO = persistence.NewLanguageDAOBolt()
-
 func GetLanguages(w http.ResponseWriter, r *http.Request) {
+	var languageDAO = *persistence.GetLanguageDAOInstance()
 	fmt.Println("GetLanguages")
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	data := languageDAO.GetAll()
@@ -30,6 +29,7 @@ func GetLanguages(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetLanguageById(w http.ResponseWriter, r *http.Request) {
+	var languageDAO = *persistence.GetLanguageDAOInstance()
 	vars := mux.Vars(r)
 	code := vars["code"]
 	fmt.Printf("GetLanguageById (%s)\n", code)
@@ -54,6 +54,7 @@ func GetLanguageById(w http.ResponseWriter, r *http.Request) {
 }
 
 func PostLanguage(w http.ResponseWriter, r *http.Request) {
+	var languageDAO = *persistence.GetLanguageDAOInstance()
 	fmt.Println("PostLanguage")
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 
@@ -78,6 +79,7 @@ func PostLanguage(w http.ResponseWriter, r *http.Request) {
 }
 
 func PutLanguage(w http.ResponseWriter, r *http.Request) {
+	var languageDAO = *persistence.GetLanguageDAOInstance()
 	fmt.Println("PutLanguage")
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 
@@ -101,6 +103,7 @@ func PutLanguage(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteLanguageById(w http.ResponseWriter, r *http.Request) {
+	var languageDAO = *persistence.GetLanguageDAOInstance()
 	vars := mux.Vars(r)
 	code := vars["code"]
 	fmt.Printf("DeleteLanguageById (%s)\n", code)

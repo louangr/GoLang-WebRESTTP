@@ -4,6 +4,8 @@ go 1.15
 
 require github.com/gorilla/mux v1.8.0
 
+require golang.org/x/sys v0.0.0-20220408201424-a24fb2fb8a0f // indirect
+
 require internal/entities v1.0.0
 
 replace internal/entities => ./internal/entities
@@ -16,10 +18,13 @@ require internal/persistence v1.0.0
 
 replace internal/persistence => ./internal/persistence
 
-require (
-	github.com/boltdb/bolt v1.3.1
-	golang.org/x/sys v0.0.0-20220408201424-a24fb2fb8a0f // indirect
-	internal/resources v1.0.0
-)
+require internal/resources v1.0.0
 
 replace internal/resources => ./internal/resources
+
+require (
+	github.com/stretchr/testify v1.7.1
+	internal/config v1.0.0
+)
+
+replace internal/config => ./internal/config

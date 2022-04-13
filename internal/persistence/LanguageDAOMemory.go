@@ -6,8 +6,8 @@ type LanguageDAOMemory struct{}
 
 var _ LanguageDAO = (*LanguageDAOMemory)(nil) // to check if LanguageDAOMemory implements LanguageDAO
 
-func NewLanguageDAOMemory() LanguageDAOMemory {
-	return LanguageDAOMemory{}
+func NewLanguageDAOMemory() *LanguageDAOMemory {
+	return new(LanguageDAOMemory)
 }
 
 var languages = []entities.Language{

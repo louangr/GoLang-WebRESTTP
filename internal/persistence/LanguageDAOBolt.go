@@ -9,8 +9,8 @@ type LanguageDAOBolt struct{}
 
 var _ LanguageDAO = (*LanguageDAOBolt)(nil) // to check if LanguageDAOBolt implements LanguageDAO
 
-func NewLanguageDAOBolt() LanguageDAOBolt {
-	return LanguageDAOBolt{}
+func NewLanguageDAOBolt() *LanguageDAOBolt {
+	return new(LanguageDAOBolt)
 }
 
 func (dao *LanguageDAOBolt) Get(code string) entities.Language {

@@ -12,12 +12,11 @@ import (
 	"github.com/gorilla/mux"
 )
 
-var studentDAO = persistence.NewStudentDAOBolt()
-
-func GetStudents(w http.ResponseWriter, r *http.Request, dao persistence.StudentDAO) {
+func GetStudents(w http.ResponseWriter, r *http.Request) {
+	var studentDAO = *persistence.GetStudentDAOInstance()
 	fmt.Println("GetStudents")
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
-	data := dao.GetAll()
+	data := studentDAO.GetAll()
 
 	j, err := json.Marshal(data)
 	if err != nil {
@@ -31,6 +30,7 @@ func GetStudents(w http.ResponseWriter, r *http.Request, dao persistence.Student
 }
 
 func GetStudentById(w http.ResponseWriter, r *http.Request) {
+	var studentDAO = *persistence.GetStudentDAOInstance()
 	vars := mux.Vars(r)
 	id := vars["id"]
 	intId, _ := strconv.Atoi(id)
@@ -56,6 +56,7 @@ func GetStudentById(w http.ResponseWriter, r *http.Request) {
 }
 
 func PostStudent(w http.ResponseWriter, r *http.Request) {
+	var studentDAO = *persistence.GetStudentDAOInstance()
 	fmt.Println("PostStudent")
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 
@@ -80,6 +81,7 @@ func PostStudent(w http.ResponseWriter, r *http.Request) {
 }
 
 func PutStudent(w http.ResponseWriter, r *http.Request) {
+	var studentDAO = *persistence.GetStudentDAOInstance()
 	fmt.Println("PutStudent")
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 
@@ -103,6 +105,7 @@ func PutStudent(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteStudentById(w http.ResponseWriter, r *http.Request) {
+	var studentDAO = *persistence.GetStudentDAOInstance()
 	vars := mux.Vars(r)
 	id := vars["id"]
 	intId, _ := strconv.Atoi(id)

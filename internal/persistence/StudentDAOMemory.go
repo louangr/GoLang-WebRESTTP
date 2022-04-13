@@ -6,8 +6,8 @@ type StudentDAOMemory struct{}
 
 var _ StudentDAO = (*StudentDAOMemory)(nil) // to check if StudentDAOMemory implements StudentDAO
 
-func NewStudentDAOMemory() StudentDAOMemory {
-	return StudentDAOMemory{}
+func NewStudentDAOMemory() *StudentDAOMemory {
+	return new(StudentDAOMemory)
 }
 
 var students = []entities.Student{

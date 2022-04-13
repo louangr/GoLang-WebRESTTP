@@ -10,8 +10,8 @@ type StudentDAOBolt struct{}
 
 var _ StudentDAO = (*StudentDAOBolt)(nil) // to check if StudentDAOBolt implements StudentDAO
 
-func NewStudentDAOBolt() StudentDAOBolt {
-	return StudentDAOBolt{}
+func NewStudentDAOBolt() *StudentDAOBolt {
+	return new(StudentDAOBolt)
 }
 
 func (dao *StudentDAOBolt) Get(id int) entities.Student {
