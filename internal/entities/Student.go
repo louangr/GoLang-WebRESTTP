@@ -6,9 +6,9 @@ import (
 )
 
 var RandomStudents = []Student{
-	{Id: 1, Firstname: "Joe", Lastname: "Doe", Age: 20, LanguageCode: "fra"},
-	{Id: 2, Firstname: "Bob", Lastname: "Doe", Age: 21, LanguageCode: "fra"},
-	{Id: 3, Firstname: "Jahn", Lastname: "Doe", Age: 21, LanguageCode: "eng"},
+	{Id: 1, Firstname: "Joe", Lastname: "Doe", Age: 20, LanguageCode: "js"},
+	{Id: 2, Firstname: "Bob", Lastname: "Doe", Age: 21, LanguageCode: "ts"},
+	{Id: 3, Firstname: "Jahn", Lastname: "Doe", Age: 21, LanguageCode: "go"},
 }
 
 type Student struct {
@@ -19,8 +19,8 @@ type Student struct {
 	LanguageCode string `json:"languageCode"`
 }
 
-func NewStudent() Student {
-	return Student{}
+func NewStudent(id int, firstname, lastname string, age int, languageCode string) Student {
+	return Student{id, firstname, lastname, age, languageCode}
 }
 
 func (s Student) String() string {
