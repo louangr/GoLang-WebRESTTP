@@ -10,12 +10,7 @@ func NewLanguageDAOMemory() *LanguageDAOMemory {
 	return new(LanguageDAOMemory)
 }
 
-var languages = []entities.Language{
-	{Code: "fra", Name: "French"},
-	{Code: "eng", Name: "English"},
-	{Code: "spa", Name: "Spanish"},
-	{Code: "fin", Name: "Finnish"},
-}
+var languages = entities.RandomLanguages
 
 func (dao *LanguageDAOMemory) Get(code string) entities.Language {
 	for _, v := range languages {

@@ -19,14 +19,14 @@ func init() {
 	config.IsMemoryDAONecessary = true
 }
 
-func TestGetStudents(t *testing.T) {
+func TestGetLanguages(t *testing.T) {
 	req, err := http.NewRequest("GET", "/", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(rest.GetStudents)
+	handler := http.HandlerFunc(rest.GetLanguages)
 	handler.ServeHTTP(rr, req)
 
 	if status := rr.Code; status != http.StatusOK {
@@ -35,30 +35,30 @@ func TestGetStudents(t *testing.T) {
 	}
 
 	result := rr.Body.String()
-	var students []entities.Student
-	err = json.Unmarshal([]byte(result), &students)
+	var Languages []entities.Language
+	err = json.Unmarshal([]byte(result), &Languages)
 	if err != nil {
-		t.Errorf("handler returned unexpected body type: don't get got []Student")
+		t.Errorf("handler returned unexpected body type: don't get got []Language")
 	}
 
-	if !reflect.DeepEqual(students, entities.RandomStudents) {
+	if !reflect.DeepEqual(Languages, entities.RandomLanguages) {
 		t.Errorf("handler returned unexpected body: got %v want %v",
-			students, entities.RandomStudents)
+			Languages, entities.RandomLanguages)
 	}
 }
 
-func TestGetStudentById(t *testing.T) {
+func TestGetLanguageById(t *testing.T) {
 	req, err := http.NewRequest("GET", "/", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	req = mux.SetURLVars(req, map[string]string{
-		"id": "1",
+		"code": "go",
 	})
 
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(rest.GetStudentById)
+	handler := http.HandlerFunc(rest.GetLanguageById)
 	handler.ServeHTTP(rr, req)
 
 	if status := rr.Code; status != http.StatusOK {
@@ -67,30 +67,30 @@ func TestGetStudentById(t *testing.T) {
 	}
 
 	result := rr.Body.String()
-	var student entities.Student
-	err = json.Unmarshal([]byte(result), &student)
+	var language entities.Language
+	err = json.Unmarshal([]byte(result), &language)
 	if err != nil {
-		t.Errorf("handler returned unexpected body type: don't get got []Student")
+		t.Errorf("handler returned unexpected body type: don't get got []Language")
 	}
 
-	if !reflect.DeepEqual(student, entities.RandomStudents[0]) {
+	if !reflect.DeepEqual(language, entities.RandomLanguages[0]) {
 		t.Errorf("handler returned unexpected body: got %v want %v",
-			student, entities.RandomStudents[0])
+			language, entities.RandomLanguages[0])
 	}
 }
 
-func TestGetStudentByIdWithUndefinedId(t *testing.T) {
+func TestGetLanguageByIdWithUndefinedId(t *testing.T) {
 	req, err := http.NewRequest("GET", "/", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	req = mux.SetURLVars(req, map[string]string{
-		"id": "10",
+		"code": "notExistingLanguageCode",
 	})
 
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(rest.GetStudentById)
+	handler := http.HandlerFunc(rest.GetLanguageById)
 	handler.ServeHTTP(rr, req)
 
 	if status := rr.Code; status != http.StatusNotFound {
@@ -106,15 +106,15 @@ func TestGetStudentByIdWithUndefinedId(t *testing.T) {
 	}
 }
 
-func TestPostStudent(t *testing.T) {
-	newStudent := entities.NewStudent(4, 30, "newStudentFirstname", "newStudentLastname", "go")
-	req, err := http.NewRequest("POST", "/", bytes.NewBuffer(newStudent.Marshal()))
+func TestPostLanguage(t *testing.T) {
+	newLanguage := entities.NewLanguage("newLanguageCode", "newLanguageName")
+	req, err := http.NewRequest("POST", "/", bytes.NewBuffer(newLanguage.Marshal()))
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(rest.PostStudent)
+	handler := http.HandlerFunc(rest.PostLanguage)
 	handler.ServeHTTP(rr, req)
 
 	if status := rr.Code; status != http.StatusCreated {
@@ -130,22 +130,19 @@ func TestPostStudent(t *testing.T) {
 	}
 }
 
-func TestPostStudentWithWrongBodyContent(t *testing.T) {
-	newStudent := `{
-        "id": 4,
-        "firstname": "newStudentFirstname",
-        "lastname": "newStudentLastname",
-        "age": 30,
-        languageCode: go
+func TestPostLanguageWithWrongBodyContent(t *testing.T) {
+	newLanguage := `{
+        "code": "newLanguageCode",
+        name: newLanguageName
     }`
 
-	req, err := http.NewRequest("POST", "/", bytes.NewBuffer([]byte(newStudent)))
+	req, err := http.NewRequest("POST", "/", bytes.NewBuffer([]byte(newLanguage)))
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(rest.PostStudent)
+	handler := http.HandlerFunc(rest.PostLanguage)
 	handler.ServeHTTP(rr, req)
 
 	if status := rr.Code; status != http.StatusBadRequest {
@@ -161,15 +158,15 @@ func TestPostStudentWithWrongBodyContent(t *testing.T) {
 	}
 }
 
-func TestPutStudent(t *testing.T) {
-	studentToUpdate := entities.NewStudent(1, 20, "updatedFirstname", "updatedLastname", "go")
-	req, err := http.NewRequest("PUT", "/", bytes.NewBuffer(studentToUpdate.Marshal()))
+func TestPutLanguage(t *testing.T) {
+	languageToUpdate := entities.NewLanguage("go", "updatedLanguageName")
+	req, err := http.NewRequest("PUT", "/", bytes.NewBuffer(languageToUpdate.Marshal()))
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(rest.PutStudent)
+	handler := http.HandlerFunc(rest.PutLanguage)
 	handler.ServeHTTP(rr, req)
 
 	if status := rr.Code; status != http.StatusOK {
@@ -185,22 +182,19 @@ func TestPutStudent(t *testing.T) {
 	}
 }
 
-func TestPutStudentWithWrongBodyContent(t *testing.T) {
-	studentToUpdate := `{
-        "id": 1,
-        "firstname": "updatedFirstname",
-        "lastname": "updatedLastname",
-        "age": 20,
-        languageCode: go
+func TestPutLanguageWithWrongBodyContent(t *testing.T) {
+	languageToUpdate := `{
+        "code": "go",
+        name: updatedLanguageName
     }`
 
-	req, err := http.NewRequest("PUT", "/", bytes.NewBuffer([]byte(studentToUpdate)))
+	req, err := http.NewRequest("PUT", "/", bytes.NewBuffer([]byte(languageToUpdate)))
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(rest.PutStudent)
+	handler := http.HandlerFunc(rest.PutLanguage)
 	handler.ServeHTTP(rr, req)
 
 	if status := rr.Code; status != http.StatusBadRequest {
@@ -216,22 +210,19 @@ func TestPutStudentWithWrongBodyContent(t *testing.T) {
 	}
 }
 
-func TestPutStudentWhileStudentIsNotExisting(t *testing.T) {
-	studentToUpdate := `{
-        "id": 10,
-        "firstname": "updatedFirstname",
-        "lastname": "updatedLastname",
-        "age": 20,
-        "languageCode": "go"
+func TestPutLanguageWhileLanguageIsNotExisting(t *testing.T) {
+	languageToUpdate := `{
+        "code": "notExistingLanguageCode",
+        "name": "updatedLanguageName"
     }`
 
-	req, err := http.NewRequest("PUT", "/", bytes.NewBuffer([]byte(studentToUpdate)))
+	req, err := http.NewRequest("PUT", "/", bytes.NewBuffer([]byte(languageToUpdate)))
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(rest.PutStudent)
+	handler := http.HandlerFunc(rest.PutLanguage)
 	handler.ServeHTTP(rr, req)
 
 	if status := rr.Code; status != http.StatusBadRequest {
@@ -247,18 +238,18 @@ func TestPutStudentWhileStudentIsNotExisting(t *testing.T) {
 	}
 }
 
-func TestDeleteStudentById(t *testing.T) {
+func TestDeleteLanguageById(t *testing.T) {
 	req, err := http.NewRequest("DELETE", "/", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	req = mux.SetURLVars(req, map[string]string{
-		"id": "1",
+		"code": "go",
 	})
 
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(rest.DeleteStudentById)
+	handler := http.HandlerFunc(rest.DeleteLanguageById)
 	handler.ServeHTTP(rr, req)
 
 	if status := rr.Code; status != http.StatusOK {
@@ -274,18 +265,18 @@ func TestDeleteStudentById(t *testing.T) {
 	}
 }
 
-func TestDeleteStudentByIdWithUndefinedId(t *testing.T) {
+func TestDeleteLanguageByIdWithUndefinedId(t *testing.T) {
 	req, err := http.NewRequest("DELETE", "/", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	req = mux.SetURLVars(req, map[string]string{
-		"id": "10",
+		"code": "notExistingLanguageCode",
 	})
 
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(rest.DeleteStudentById)
+	handler := http.HandlerFunc(rest.DeleteLanguageById)
 	handler.ServeHTTP(rr, req)
 
 	if status := rr.Code; status != http.StatusBadRequest {

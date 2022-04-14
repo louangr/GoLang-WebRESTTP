@@ -6,9 +6,9 @@ import (
 )
 
 var RandomStudents = []Student{
-	{Id: 1, Firstname: "Joe", Lastname: "Doe", Age: 20, LanguageCode: "fra"},
-	{Id: 2, Firstname: "Bob", Lastname: "Doe", Age: 21, LanguageCode: "fra"},
-	{Id: 3, Firstname: "Jahn", Lastname: "Doe", Age: 21, LanguageCode: "eng"},
+	{Id: 1, Firstname: "Joe", Lastname: "Doe", Age: 20, LanguageCode: "go"},
+	{Id: 2, Firstname: "Bob", Lastname: "Doe", Age: 21, LanguageCode: "js"},
+	{Id: 3, Firstname: "Jahn", Lastname: "Doe", Age: 21, LanguageCode: "ts"},
 }
 
 type Student struct {
@@ -19,19 +19,15 @@ type Student struct {
 	LanguageCode string `json:"languageCode"`
 }
 
-func NewStudent() Student {
-	return Student{}
+func NewStudent(id, age int, firstname, lastname, languageCode string) Student {
+	return Student{id, firstname, lastname, age, languageCode}
 }
 
 func (s Student) String() string {
 	return fmt.Sprintf("%d - %s %s", s.Id, s.Firstname, s.Lastname)
 }
 
-func (s Student) Marshal() ([]byte, error) {
-	j, err := json.Marshal(s)
-	if err != nil {
-		return nil, &json.MarshalerError{}
-	}
-
-	return j, nil
+func (s Student) Marshal() []byte {
+	j, _ := json.Marshal(s)
+	return j
 }

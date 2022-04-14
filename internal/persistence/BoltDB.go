@@ -58,17 +58,11 @@ func InitBoldDB(dbFileName string) {
 
 func (b *BoltDB) fill() {
 	for _, s := range entities.RandomStudents {
-		j, err := s.Marshal()
-		if err == nil {
-			b.Put(StudentBucketName, fmt.Sprintf("%d", s.Id), string(j))
-		}
+		b.Put(StudentBucketName, fmt.Sprintf("%d", s.Id), string(s.Marshal()))
 	}
 
 	for _, l := range entities.RandomLanguages {
-		j, err := l.Marshal()
-		if err == nil {
-			b.Put(LanguageBucketName, l.Code, string(j))
-		}
+		b.Put(LanguageBucketName, l.Code, string(l.Marshal()))
 	}
 }
 

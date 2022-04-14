@@ -17,19 +17,15 @@ type Language struct {
 	Name string `json:"name"`
 }
 
-func NewLanguage() Language {
-	return Language{}
+func NewLanguage(code, name string) Language {
+	return Language{code, name}
 }
 
 func (l Language) String() string {
 	return fmt.Sprintf("%s - %s", l.Code, l.Name)
 }
 
-func (l Language) Marshal() ([]byte, error) {
-	j, err := json.Marshal(l)
-	if err != nil {
-		return nil, &json.MarshalerError{}
-	}
-
-	return j, nil
+func (l Language) Marshal() []byte {
+	j, _ := json.Marshal(l)
+	return j
 }
