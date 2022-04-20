@@ -19,6 +19,18 @@ type Student struct {
 	LanguageCode string `json:"languageCode"`
 }
 
+// swagger:response studentStruct
+type swaggStudentStruct struct {
+	// in:body
+	Body Student
+}
+
+// swagger:response studentStructArray
+type swaggStudentStructArray struct {
+	// in:body
+	Body []Student
+}
+
 func NewStudent(id, age int, firstname, lastname, languageCode string) Student {
 	return Student{id, firstname, lastname, age, languageCode}
 }

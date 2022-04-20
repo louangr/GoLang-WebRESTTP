@@ -17,6 +17,18 @@ type Language struct {
 	Name string `json:"name"`
 }
 
+// swagger:response languageStruct
+type swaggLanguageStruct struct {
+	// in:body
+	Body Language
+}
+
+// swagger:response languageStructArray
+type swaggLanguageStructArray struct {
+	// in:body
+	Body []Language
+}
+
 func NewLanguage(code, name string) Language {
 	return Language{code, name}
 }

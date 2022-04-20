@@ -12,6 +12,14 @@ import (
 	"github.com/gorilla/mux"
 )
 
+// swagger:operation GET /students student GetStudents
+// ---
+// summary: Return all students
+// description: If the are not students, an empty array will be returned
+// responses:
+//   "200":
+//     "$ref": "#/responses/studentStructArray"
+
 func GetStudents(w http.ResponseWriter, r *http.Request) {
 	var studentDAO = *persistence.GetStudentDAOInstance()
 	fmt.Println("GetStudents")
@@ -28,6 +36,22 @@ func GetStudents(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, "%s", j)
 }
+
+// swagger:operation GET /students/{id} student GetStudentById
+// ---
+// summary: Return a student by Id
+// description: If the student is not found, a 404 status code will be returned
+// parameters:
+// - name: id
+//   in: path
+//   description: student Id
+//   type: integer
+//   required: true
+// responses:
+//   "200":
+//     "$ref": "#/responses/studentStruct"
+//   "404":
+//     "$ref": "#/responses/genericResponse"
 
 func GetStudentById(w http.ResponseWriter, r *http.Request) {
 	var studentDAO = *persistence.GetStudentDAOInstance()
@@ -55,6 +79,16 @@ func GetStudentById(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "%s", j)
 }
 
+// swagger:operation POST /students student PostStudent
+// ---
+// summary: Create a new student
+// description: If the request body format is not correct, a 400 status code will be returned
+// responses:
+//   "200":
+//     "$ref": "#/responses/genericResponse"
+//   "400":
+//     "$ref": "#/responses/genericResponse"
+
 func PostStudent(w http.ResponseWriter, r *http.Request) {
 	var studentDAO = *persistence.GetStudentDAOInstance()
 	fmt.Println("PostStudent")
@@ -80,6 +114,16 @@ func PostStudent(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// swagger:operation PUT /students student PutStudent
+// ---
+// summary: Update an existing student
+// description: If the request body format is not correct or the target student Id is not found, a 400 status code will be returned
+// responses:
+//   "200":
+//     "$ref": "#/responses/genericResponse"
+//   "400":
+//     "$ref": "#/responses/genericResponse"
+
 func PutStudent(w http.ResponseWriter, r *http.Request) {
 	var studentDAO = *persistence.GetStudentDAOInstance()
 	fmt.Println("PutStudent")
@@ -103,6 +147,22 @@ func PutStudent(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, resources.UnsuccessfulUpdateJson)
 	}
 }
+
+// swagger:operation DELETE /students/{id} student DeleteStudentById
+// ---
+// summary: Delete a student by Id
+// description: If the student is not found, a 404 status code will be returned
+// parameters:
+// - name: id
+//   in: path
+//   description: student Id
+//   type: integer
+//   required: true
+// responses:
+//   "200":
+//     "$ref": "#/responses/genericResponse"
+//   "404":
+//     "$ref": "#/responses/genericResponse"
 
 func DeleteStudentById(w http.ResponseWriter, r *http.Request) {
 	var studentDAO = *persistence.GetStudentDAOInstance()

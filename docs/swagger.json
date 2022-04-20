@@ -1,0 +1,316 @@
+{
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "swagger": "2.0",
+  "info": {
+    "description": "Students and Languages APIs",
+    "title": "Students and Languages APIs",
+    "contact": {
+      "name": "Louan",
+      "email": "by@carrier.pigeon"
+    },
+    "version": "1.0.0"
+  },
+  "basePath": "/",
+  "paths": {
+    "/languages": {
+      "get": {
+        "description": "If the are not languages, an empty array will be returned",
+        "tags": [
+          "language"
+        ],
+        "summary": "Return all languages",
+        "operationId": "GetLanguages",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/languageStructArray"
+          }
+        }
+      },
+      "put": {
+        "description": "If the request body format is not correct or the target language Id is not found, a 400 status code will be returned",
+        "tags": [
+          "language"
+        ],
+        "summary": "Update an existing language",
+        "operationId": "PutLanguage",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/genericResponse"
+          },
+          "400": {
+            "$ref": "#/responses/genericResponse"
+          }
+        }
+      },
+      "post": {
+        "description": "If the request body format is not correct, a 400 status code will be returned",
+        "tags": [
+          "language"
+        ],
+        "summary": "Create a new language",
+        "operationId": "PostLanguage",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/genericResponse"
+          },
+          "400": {
+            "$ref": "#/responses/genericResponse"
+          }
+        }
+      }
+    },
+    "/languages/{code}": {
+      "get": {
+        "description": "If the language is not found, a 404 status code will be returned",
+        "tags": [
+          "language"
+        ],
+        "summary": "Return a language by Id",
+        "operationId": "GetLanguageById",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "correspond to the language's Id",
+            "name": "code",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/languageStruct"
+          },
+          "404": {
+            "$ref": "#/responses/genericResponse"
+          }
+        }
+      },
+      "delete": {
+        "description": "If the language is not found, a 404 status code will be returned",
+        "tags": [
+          "language"
+        ],
+        "summary": "Delete a language by Id",
+        "operationId": "DeleteLanguageById",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "correspond to the language's Id",
+            "name": "code",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/genericResponse"
+          },
+          "404": {
+            "$ref": "#/responses/genericResponse"
+          }
+        }
+      }
+    },
+    "/students": {
+      "get": {
+        "description": "If the are not students, an empty array will be returned",
+        "tags": [
+          "student"
+        ],
+        "summary": "Return all students",
+        "operationId": "GetStudents",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/studentStructArray"
+          }
+        }
+      },
+      "put": {
+        "description": "If the request body format is not correct or the target student Id is not found, a 400 status code will be returned",
+        "tags": [
+          "student"
+        ],
+        "summary": "Update an existing student",
+        "operationId": "PutStudent",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/genericResponse"
+          },
+          "400": {
+            "$ref": "#/responses/genericResponse"
+          }
+        }
+      },
+      "post": {
+        "description": "If the request body format is not correct, a 400 status code will be returned",
+        "tags": [
+          "student"
+        ],
+        "summary": "Create a new student",
+        "operationId": "PostStudent",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/genericResponse"
+          },
+          "400": {
+            "$ref": "#/responses/genericResponse"
+          }
+        }
+      }
+    },
+    "/students/{id}": {
+      "get": {
+        "description": "If the student is not found, a 404 status code will be returned",
+        "tags": [
+          "student"
+        ],
+        "summary": "Return a student by Id",
+        "operationId": "GetStudentById",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "student Id",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/studentStruct"
+          },
+          "404": {
+            "$ref": "#/responses/genericResponse"
+          }
+        }
+      },
+      "delete": {
+        "description": "If the student is not found, a 404 status code will be returned",
+        "tags": [
+          "student"
+        ],
+        "summary": "Delete a student by Id",
+        "operationId": "DeleteStudentById",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "student Id",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/genericResponse"
+          },
+          "404": {
+            "$ref": "#/responses/genericResponse"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Language": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "x-go-name": "Code"
+        },
+        "name": {
+          "type": "string",
+          "x-go-name": "Name"
+        }
+      },
+      "x-go-package": "internal/entities"
+    },
+    "Student": {
+      "type": "object",
+      "properties": {
+        "age": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Age"
+        },
+        "firstname": {
+          "type": "string",
+          "x-go-name": "Firstname"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Id"
+        },
+        "languageCode": {
+          "type": "string",
+          "x-go-name": "LanguageCode"
+        },
+        "lastname": {
+          "type": "string",
+          "x-go-name": "Lastname"
+        }
+      },
+      "x-go-package": "internal/entities"
+    }
+  },
+  "responses": {
+    "genericResponse": {
+      "description": "",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "Code"
+          },
+          "message": {
+            "type": "string",
+            "x-go-name": "Message"
+          }
+        }
+      }
+    },
+    "languageStruct": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/Language"
+      }
+    },
+    "languageStructArray": {
+      "description": "",
+      "schema": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/Language"
+        }
+      }
+    },
+    "studentStruct": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/Student"
+      }
+    },
+    "studentStructArray": {
+      "description": "",
+      "schema": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/Student"
+        }
+      }
+    }
+  }
+}

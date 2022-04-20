@@ -19,3 +19,12 @@ var UnsuccessfulUpdateJson = "{ \"message\": \"The resource was not updated\", \
 var SuccessfulDeletionJson = "{ \"message\": \"The resource was successfully deleted\", \"code\": 200 }"
 
 var UnsuccessfulDeletionJson = "{ \"message\": \"The resource was not deleted\", \"code\": 400 }"
+
+// swagger:response genericResponse
+type swaggGenericResponse struct {
+	// in:body
+	Body struct {
+		Code    int    `json:"code"`
+		Message string `json:"message"`
+	}
+}

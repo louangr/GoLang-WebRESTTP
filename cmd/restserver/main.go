@@ -1,3 +1,21 @@
+// Package classification Students and Languages APIs
+//
+// Students and Languages APIs
+//
+// Terms Of Service:
+//
+//	Schemes: http, https
+//	Version: 1.0.0
+//	BasePath: /
+//	Contact: Louan <by@carrier.pigeon>
+//
+//	Consumes:
+//	- application/json
+//
+//	Produces:
+//	- application/json
+//
+// swagger:meta
 package main
 
 import (
