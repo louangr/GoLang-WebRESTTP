@@ -83,6 +83,14 @@ func GetStudentById(w http.ResponseWriter, r *http.Request) {
 // ---
 // summary: Create a new student
 // description: If the request body format is not correct, a 400 status code will be returned
+// produces:
+// - application/json
+// parameters:
+// - name: student
+//   in: request body
+//   description: a student object
+//   required: true
+//   type: Student
 // responses:
 //   "200":
 //     "$ref": "#/responses/genericResponse"
@@ -118,6 +126,14 @@ func PostStudent(w http.ResponseWriter, r *http.Request) {
 // ---
 // summary: Update an existing student
 // description: If the request body format is not correct or the target student Id is not found, a 400 status code will be returned
+// produces:
+// - application/json
+// parameters:
+// - name: student
+//   in: request body
+//   description: a student object
+//   required: true
+//   type: Student
 // responses:
 //   "200":
 //     "$ref": "#/responses/genericResponse"

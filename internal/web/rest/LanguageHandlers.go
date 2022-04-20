@@ -81,6 +81,14 @@ func GetLanguageById(w http.ResponseWriter, r *http.Request) {
 // ---
 // summary: Create a new language
 // description: If the request body format is not correct, a 400 status code will be returned
+// produces:
+// - application/json
+// parameters:
+// - name: language
+//   in: request body
+//   description: a language object
+//   required: true
+//   type: Language
 // responses:
 //   "200":
 //     "$ref": "#/responses/genericResponse"
@@ -116,6 +124,14 @@ func PostLanguage(w http.ResponseWriter, r *http.Request) {
 // ---
 // summary: Update an existing language
 // description: If the request body format is not correct or the target language Id is not found, a 400 status code will be returned
+// produces:
+// - application/json
+// parameters:
+// - name: language
+//   in: request body
+//   description: a language object
+//   required: true
+//   type: Language
 // responses:
 //   "200":
 //     "$ref": "#/responses/genericResponse"

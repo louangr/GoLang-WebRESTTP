@@ -37,11 +37,23 @@
       },
       "put": {
         "description": "If the request body format is not correct or the target language Id is not found, a 400 status code will be returned",
+        "produces": [
+          "application/json"
+        ],
         "tags": [
           "language"
         ],
         "summary": "Update an existing language",
         "operationId": "PutLanguage",
+        "parameters": [
+          {
+            "type": "Language",
+            "description": "a language object",
+            "name": "language",
+            "in": "request body",
+            "required": true
+          }
+        ],
         "responses": {
           "200": {
             "$ref": "#/responses/genericResponse"
@@ -53,11 +65,23 @@
       },
       "post": {
         "description": "If the request body format is not correct, a 400 status code will be returned",
+        "produces": [
+          "application/json"
+        ],
         "tags": [
           "language"
         ],
         "summary": "Create a new language",
         "operationId": "PostLanguage",
+        "parameters": [
+          {
+            "type": "Language",
+            "description": "a language object",
+            "name": "language",
+            "in": "request body",
+            "required": true
+          }
+        ],
         "responses": {
           "200": {
             "$ref": "#/responses/genericResponse"
@@ -136,11 +160,23 @@
       },
       "put": {
         "description": "If the request body format is not correct or the target student Id is not found, a 400 status code will be returned",
+        "produces": [
+          "application/json"
+        ],
         "tags": [
           "student"
         ],
         "summary": "Update an existing student",
         "operationId": "PutStudent",
+        "parameters": [
+          {
+            "type": "Student",
+            "description": "a student object",
+            "name": "student",
+            "in": "request body",
+            "required": true
+          }
+        ],
         "responses": {
           "200": {
             "$ref": "#/responses/genericResponse"
@@ -152,11 +188,23 @@
       },
       "post": {
         "description": "If the request body format is not correct, a 400 status code will be returned",
+        "produces": [
+          "application/json"
+        ],
         "tags": [
           "student"
         ],
         "summary": "Create a new student",
         "operationId": "PostStudent",
+        "parameters": [
+          {
+            "type": "Student",
+            "description": "a student object",
+            "name": "student",
+            "in": "request body",
+            "required": true
+          }
+        ],
         "responses": {
           "200": {
             "$ref": "#/responses/genericResponse"
