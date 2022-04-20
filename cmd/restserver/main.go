@@ -49,6 +49,9 @@ func main() {
 	myRouter.HandleFunc("/languages", rest.PutLanguage).Methods("PUT")
 	myRouter.HandleFunc("/languages/{code}", rest.DeleteLanguageById).Methods("DELETE")
 
+	fs := http.FileServer(http.Dir("./swaggerui"))
+	myRouter.PathPrefix("/swaggerui/").Handler(http.StripPrefix("/swaggerui/", fs))
+
 	fmt.Println("Server started on port", portNumber)
 	log.Fatal(http.ListenAndServe(":"+portNumber, myRouter))
 }
