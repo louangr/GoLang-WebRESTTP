@@ -288,15 +288,15 @@ func TestDeleteStudentByIdWithUndefinedId(t *testing.T) {
 	handler := http.HandlerFunc(rest.DeleteStudentById)
 	handler.ServeHTTP(rr, req)
 
-	if status := rr.Code; status != http.StatusBadRequest {
+	if status := rr.Code; status != http.StatusNotFound {
 		t.Errorf("handler returned wrong status code: got %v want %v",
-			status, http.StatusBadRequest)
+			status, http.StatusNotFound)
 	}
 
 	result := rr.Body.String()
 
-	if result != resources.UnsuccessfulDeletionJson {
+	if result != resources.NotFoundResourceJson {
 		t.Errorf("handler returned unexpected body: got %v want %v",
-			result, resources.UnsuccessfulDeletionJson)
+			result, resources.NotFoundResourceJson)
 	}
 }

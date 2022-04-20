@@ -114,7 +114,7 @@ func DeleteLanguageById(w http.ResponseWriter, r *http.Request) {
 	if hasBeenDeleted {
 		fmt.Fprintf(w, resources.SuccessfulDeletionJson)
 	} else {
-		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintf(w, resources.UnsuccessfulDeletionJson)
+		w.WriteHeader(http.StatusNotFound)
+		fmt.Fprintf(w, resources.NotFoundResourceJson)
 	}
 }

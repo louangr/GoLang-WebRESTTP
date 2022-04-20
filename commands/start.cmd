@@ -1,4 +1,4 @@
-SET portNumber=8080
+SET portNumber=8000
 SET dbFileName="myBolt"
 
 go clean -cache ./cmd/restserver/...
