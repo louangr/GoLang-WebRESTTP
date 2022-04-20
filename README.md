@@ -1,13 +1,8 @@
 # ProjectRESTAPI (Louan)
 
-- To build the project, run `./build.cmd` and find the executable in `./cmd/restserver`
-- To start the REST API, run `./start.cmd`
+- To build the project, run `./commands/build.cmd` and find the executable in `./cmd/restserver`
+- To start the REST API, run `./commands/start.cmd`
   - The port number can be change in the first line of the `start.cmd` file
   - The .db file name can be change in the second line of the `start.cmd` file
-
-## TODO :
-- OpenAPI (au format yaml) => doc de l'API REST
-- lgu.univ@gmail.com en envoyant un zip ou en donnat un repo Github
-- ajouter des tests
-
-- https://medium.com/wesionary-team/automatically-generate-restful-api-documentation-in-golang-76927f8f8935
+- To generate swagger documentation, run `./commands/swaggerDocGeneration.cmd`
+- Once the REST API is started, you can find the Swagger UI documentation behind this endpoint: [http://localhost:8000/swaggerui/](http://localhost:8000/swaggerui/)
